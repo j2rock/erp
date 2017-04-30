@@ -1,0 +1,120 @@
+<html> 
+<head> 
+<title>成本费用利润计算器</title>
+<p>&nbsp;</p>
+<center><p><h1>成本费用利润计算器</h1></p></center>
+<script> 
+
+function Calculator(TP,PurchaseCost,ShippingCost,ExchangeRate)
+{
+var eBayFVFee=CaleBayFVFee(TP)
+var PayPalFee=CalPayPalFee(TP)
+var Profit=CalProfit(TP,eBayFVFee,PayPalFee,PurchaseCost,ShippingCost)
+var ProfitRate=CalProfitRate(TP,Profit)
+   //Converse USD into RMB and output
+   document.getElementById("eBayFVFee").innerHTML=parseFloat(eBayFVFee*ExchangeRate).toFixed(3)
+document.getElementById("ebfvfRate").innerHTML=parseFloat(eBayFVFee/TP*100).toFixed(3)+"%"
+   document.getElementById("PayPalFee").innerHTML=parseFloat(PayPalFee*ExchangeRate).toFixed(3)
+document.getElementById("ppfeeRate").innerHTML=parseFloat(PayPalFee/TP*100).toFixed(3)+"%"
+   document.getElementById("Profit").innerHTML=parseFloat(Profit*ExchangeRate).toFixed(3)
+   document.getElementById("ProfitRate").innerHTML=ProfitRate
+}
+
+function CalProfitRate(TP,Profit)
+{
+return parseFloat(Profit/TP*100).toFixed(3)+"%"
+}
+
+function CalProfit(TP,eBayFVFee,PayPalFee,PurchaseCost,ShippingCost)
+{
+return TP-eBayFVFee-PayPalFee-PurchaseCost-ShippingCost
+}
+
+function CaleBayFVFee(TP) 
+{ 
+   var fvf
+   if (document.getElementById("clothacc").selected){ fvf=0.09 }
+   else if(document.getElementById("motoracc").selected){ fvf=0.08 }
+
+   if (document.getElementById("isStore").checked)
+   {
+   return TP*fvf
+   }
+   else if (document.getElementById("isNotStore").checked)
+   {
+   return TP*0.10
+   }
+} 
+
+function CalPayPalFee(TP)
+{
+   if (document.getElementById("isSmallValue").checked)
+   {
+   return TP*0.06+0.05
+   }
+   else if (document.getElementById("isNotSmallValue").checked)
+   {
+   return TP*0.034+0.3
+   }
+}
+
+</script> 
+</head> 
+
+<body> 
+<center>
+<form> 
+<select>
+  <option id="clothacc">服饰（成交费9%）</option>
+  <option id="motoracc">车品（成交费8%）</option>
+</select>
+<!--选择是否店铺，用单选框-->
+<input name="ifStore" type="radio" id="isStore" checked=True>是店铺
+<input name="ifStore" type="radio" id="isNotStore">不是店铺
+<span>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+<!--选择是否用小额收款的PayPal账号，用单选框-->
+<input name="ifSmallValue" type="radio" id="isSmallValue" checked=True>是小额收款
+<input name="ifSmallValue" type="radio" id="isNotSmallValue">非小额（175947377@qq.com月入3千-1万$，按优惠汇率3.4%+0.3$计,9.6$以上用它收款）
+
+<p>
+总金额（USD）：<input type="text" id="TotalPrice" style="width:100px;"/>
+采购成本（RMB）：<input type="text" id="PurchaseCost" style="width:100px;"/>
+运费（RMB）：<input type="text" id="ShippingCost" style="width:100px;"/>
+<br/>
+汇率：<input type="text" id="ExchangeRate" value="6.62" style="width:100px;"/><a href="http://www.boc.cn/sourcedb/whpj/" target="_blank">实时汇率查询</a>（默认汇率差太多时要自己输入新汇率）
+</p>
+<br/>
+
+<table border="1" cellspacing="0" style="height:140px;">
+<tr>
+<th style="width:120px;">项目</th>
+<th style="width:120px;">金额（RMB)</th>
+<th style="width:120px;">占总价比</th>
+<tr>
+<td>eBay成交费</td>
+<td id="eBayFVFee">&nbsp;</td>
+<td id="ebfvfRate">&nbsp;</td>
+</tr>
+<tr>
+<td>PayPal费用</td>
+<td id="PayPalFee">&nbsp;</td>
+<td id="ppfeeRate">&nbsp;</td>
+</tr>
+<tr>
+<td>利润</td>
+<td id="Profit">&nbsp;</td>
+<td id="ProfitRate">&nbsp;</td>
+</tr>
+
+</table>
+<br/>
+<br/>
+<!--把所有数据转化成 USD 传给计算器计算，然后再由计算器计算好后，转化成 RMB 输出-->
+<input type="button" onclick="Calculator(TotalPrice.value,PurchaseCost.value/ExchangeRate.value,ShippingCost.value/ExchangeRate.value,ExchangeRate.value)" value="计算" style="width:80px;height:30px;"> 
+
+</form> 
+
+</center>
+
+</body> 
+</html>

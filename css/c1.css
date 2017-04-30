@@ -1,0 +1,56 @@
+.fullwidth{
+	width: 100%;
+}
+h2{
+/*	position: relative;  */
+	left: 60px;
+}
+#revsku{
+	margin-top: 30px;
+}
+
+ul
+{
+	list-style-type:none;
+}
+table{
+	width:90%;
+	border-collapse:collapse;
+}
+table, td, th{
+	border:1px solid black;
+}
+td, th{
+	padding:2px;
+}
+td input{
+
+/*	width: 100%;padding:3px; 	height: 30px; 	background-color: yellow;*/
+}
+
+header {
+    background-color:gray;
+    color:#eee;
+    text-align:center;
+    padding:5px;
+}
+nav {
+    line-height:50px;
+/*    background-color:#eee; */
+    height:100%;
+    width:10%;
+    float:left;
+    padding:5px;	      
+}
+section {
+    width:85%;
+    float:left;
+    padding:10px;	 	 
+}
+footer {
+    background-color:#dddddd;
+    color:black;
+    clear:both;
+    text-align:center;
+    padding:5px;	 	 
+}
